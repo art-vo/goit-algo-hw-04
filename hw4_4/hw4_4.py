@@ -25,57 +25,57 @@
 """
 
 def main():
-    contacts = {}                                                # словник для зберігання контактів {ім'я: номер телефону}
+    contacts = {}                                                # dictionary to store contacts {name: phone number}
     print("Welcome to the assistant bot!")
 
     while True:
-        user_input = input("Enter a command: ").strip().lower()  # отримання введення від користувача та перетворення його у нижній регістр
-        command, *args = parse_input(user_input)                 # розбиття введеного рядка на команду та аргументи
+        user_input = input("Enter a command: ").strip().lower()  # receiving input from the user and converting it to lowercase
+        command, *args = parse_input(user_input)                 # splitting the input string into command and arguments
 
-        if command == "exit" or command == "close":              # перевірка чи користувач ввів команду "exit" або "close"
+        if command == "exit" or command == "close":              # checking whether the user entered the "exit" or "close" command
             print("Good bye!")  
-            break                                                # вихід з циклу
+            break                                                # loop exit
         elif command == "hello":
             print("How can I help you?")
         elif command == "add":
-            print(add_contact(args, contacts))                   # виклик функції для додавання контакту
+            print(add_contact(args, contacts))                   # function call to add a contact
         elif command == "change":
-            print(change_contact(args, contacts))                # виклик функції для зміни номера телефону контакту
+            print(change_contact(args, contacts))                # call the function to change the phone number of the contact
         elif command == "phone":
-            print(show_phone(args, contacts))                    # виклик функції для виведення номера телефону контакту
+            print(show_phone(args, contacts))                    # function call to output the contact's phone number
         elif command == "all":
-            print(show_all(contacts))                            # виклик функції для виведення всіх контактів
+            print(show_all(contacts))                            # function call to display all contacts
         else:
             print("Invalid command.")
 
 def parse_input(user_input):
-    cmd, *args = user_input.split()                              # розділення введеного рядка на команду та аргументи
-    cmd = cmd.strip().lower()                                    # видалення зайвих пробілів та перетворення команди у нижній регістр
+    cmd, *args = user_input.split()                              # splitting the input line into command and arguments
+    cmd = cmd.strip().lower()                                    # removing extra spaces and converting the command to lower case
     return cmd, *args
 
 def add_contact(args, contacts):
-    name, phone = args                                           # розділення аргументів на ім'я та номер телефону
-    contacts[name] = phone                                       # додавання контакту до словника
+    name, phone = args                                           # splitting arguments into name and phone number
+    contacts[name] = phone                                       # adding a contact to the dictionary
     return "Contact added."
 
 def change_contact(args, contacts):
-    name, new_phone = args                                       # розділення аргументів на ім'я та новий номер телефону
-    if name in contacts:                                         # перевірка чи ім'я існує в словнику
-        contacts[name] = new_phone                               # зміна номера телефону для зазначеного контакту
+    name, new_phone = args                                       # splitting arguments into name and new phone number
+    if name in contacts:                                         # checking if the name exists in the dictionary
+        contacts[name] = new_phone                               # changing the phone number for the specified contact
         return "Contact updated." 
     else:
         return "Contact not found."
     
 def show_phone(args, contacts):
-    name = args[0]                                                # отримання імені з аргументів
-    if name in contacts:                                          # перевірка чи ім'я існує в словнику
-        return f"Phone number for {name}: {contacts[name]}"       # виведення номера телефону для зазначеного контакту
+    name = args[0]                                                # getting name from arguments
+    if name in contacts:                                          # checking if the name exists in the dictionary
+        return f"Phone number for {name}: {contacts[name]}"       #outputting the phone number for the specified contact
     else:
-        return "Contact not found."                               # повідомлення про невдалу спробу знайти контакт, якщо ім'я не знайдено
+        return "Contact not found."                               # message about an unsuccessful attempt to find a contact if the name is not found
 
 def show_all(contacts):
-    if contacts:                                                  # перевірка чи словник не пустий
-        all_contacts = "\n".join(f"{name}: {phone}" for name, phone in contacts.items())  # створення рядка з усіма контактами
+    if contacts:                                                  # checking if the dictionary is not empty
+        all_contacts = "\n".join(f"{name}: {phone}" for name, phone in contacts.items())  # creating a row with all contacts
         return all_contacts 
     else:
         return "No contacts saved."  
